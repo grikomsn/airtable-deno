@@ -24,7 +24,6 @@
 ## Imports
 
 - <https://denopkg.com/grikomsn/airtable-deno/mod.ts>
-- <https://griko.dev/airtable-deno.ts>
 
 ## Comparison with [Node.js version](https://github.com/Airtable/airtable.js)
 
