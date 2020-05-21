@@ -16,6 +16,7 @@
 - [Basic examples](#basic-examples)
 - [Advanced examples](#advanced-examples)
 - [Further reading](#further-reading)
+- [Used by](#used-by)
 - [Dependencies](#dependencies)
 - [License](#license)
 
@@ -127,6 +128,10 @@ For advanced examples, view the [`examples.ts`](./examples.ts) file.
 ## Further reading
 
 All options, parameters, errors, and responses are the same as on the [Airtable API documentation](https://airtable.com/api).
+
+## Used by
+
+- Shrtn Deno: <https://github.com/grikomsn/shrtn-deno>
 
 ## Dependencies
 
