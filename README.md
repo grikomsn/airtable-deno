@@ -2,7 +2,7 @@
 
 <div align='center'>
 
-![airtable-deno](./header.png)
+![airtable-deno](https://raw.githubusercontent.com/grikomsn/airtable-deno/master/header.png)
 
 ![release](https://badgen.net/github/release/grikomsn/airtable-deno/)
 
