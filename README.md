@@ -24,6 +24,14 @@
 
 ## Imports
 
+**Latest version (v0.1.0)**
+
+- <https://deno.land/x/airtable@v0.1.0/mod.ts>
+- <https://denopkg.com/grikomsn/airtable-deno@v0.1.0/mod.ts>
+
+**Bleeding edge (master branch)**
+
+- <https://deno.land/x/airtable/mod.ts>
 - <https://denopkg.com/grikomsn/airtable-deno/mod.ts>
 
 ## Comparison with [Node.js version](https://github.com/Airtable/airtable.js)
