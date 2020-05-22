@@ -55,7 +55,7 @@
 **Instantiate Airtable client**
 
 ```ts
-import { Airtable } from "https://griko.dev/airtable-deno.ts";
+import { Airtable } from "https://deno.land/x/airtable/mod.ts";
 
 const airtable = new Airtable({
   apiKey: "keyXXXXXXXXXXXXXX",
@@ -78,7 +78,7 @@ const createOne = await airtable.create({
   Age: 25,
 });
 
-import { Field } from "https://griko.dev/airtable-deno.ts";
+import { Field } from "https://deno.land/x/airtable/mod.ts";
 
 type Fields = {
   Name: string;
