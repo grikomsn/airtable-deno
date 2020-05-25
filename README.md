@@ -24,10 +24,10 @@
 
 ## Imports
 
-**Latest version (v0.1.0)**
+**Latest version (v0.2.0)**
 
-- <https://deno.land/x/airtable@v0.1.0/mod.ts>
-- <https://denopkg.com/grikomsn/airtable-deno@v0.1.0/mod.ts>
+- <https://deno.land/x/airtable@v0.2.0/mod.ts>
+- <https://denopkg.com/grikomsn/airtable-deno@v0.2.0/mod.ts>
 
 **Bleeding edge (master branch)**
 
