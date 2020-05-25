@@ -51,7 +51,7 @@ export class Airtable {
    * @returns
    * @memberof Airtable
    */
-  configure(options: AirtableOptions) {
+  configure(options: AirtableOptions): Airtable {
     this.#options = { ...this.#options, ...options };
     return this;
   }
@@ -63,7 +63,7 @@ export class Airtable {
    * @returns
    * @memberof Airtable
    */
-  base(baseId: string) {
+  base(baseId: string): Airtable {
     this.#options.baseId = baseId;
     return this;
   }
@@ -75,7 +75,7 @@ export class Airtable {
    * @returns
    * @memberof Airtable
    */
-  table(tableName: string) {
+  table(tableName: string): Airtable {
     this.#options.tableName = tableName;
     return this;
   }
@@ -88,7 +88,9 @@ export class Airtable {
    * @returns
    * @memberof Airtable
    */
-  select<T extends FieldSet<string>>(options: SelectOptions<keyof T> = {}) {
+  select<T extends FieldSet<string>>(
+    options: SelectOptions<keyof T> = {}
+  ): Promise<SelectResult<T>> {
     return this.request<SelectResult<T>>({
       url: this.getRequestUrl(options),
     });
@@ -102,7 +104,7 @@ export class Airtable {
    * @returns
    * @memberof Airtable
    */
-  find<T extends FieldSet<string>>(id: string) {
+  find<T extends FieldSet<string>>(id: string): Promise<TableRecord<T>> {
     return this.request<TableRecord<T>>({
       url: this.getRequestUrl({}, id),
     });
@@ -184,7 +186,7 @@ export class Airtable {
    */
   update<T extends FieldSet<string>>(
     id: string,
-    record?: T,
+    record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
@@ -238,7 +240,7 @@ export class Airtable {
    */
   replace<T extends FieldSet<string>>(
     id: string,
-    record?: T,
+    record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
