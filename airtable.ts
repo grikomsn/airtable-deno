@@ -17,6 +17,7 @@ import { hasAnyKey } from "./utils.ts";
  * Unofficial Airtable API client for Deno
  *
  * @author Griko Nibras <hello@griko.id>
+ * @copyright MIT License Copyright (c) 2020 [Griko Nibras](https://github.com/grikomsn)
  * @export
  * @class Airtable
  */
@@ -24,12 +25,22 @@ export class Airtable {
   #options: AirtableOptions;
 
   /**
-   * Creates an instance of Airtable
+   * Creates an instance of Airtable client
+   *
+   * ```ts
+   * const airtable = new Airtable()
+   * const airtable = new Airtable({ useEnv: true })
+   * const airtable = new Airtable({
+   *   apiKey: "keyXXXXXXXXXXXXXX",
+   *   baseId: "appXXXXXXXXXXXXXX",
+   *   tableName: "Some table name",
+   * })
+   * ```
    *
    * @param {AirtableOptions} options Airtable client configuration
    * @memberof Airtable
    */
-  constructor(options: AirtableOptions) {
+  constructor(options: AirtableOptions = {}) {
     this.#options = {
       ...(options.useEnv
         ? {
@@ -47,48 +58,70 @@ export class Airtable {
   /**
    * Reconfigure the Airtable client
    *
+   * ```ts
+   * airtable.configure({
+   *   apiKey: "keyXXXXXXXXXXXXXX",
+   *   baseId: "appXXXXXXXXXXXXXX",
+   *   tableName: "Some table name",
+   * })
+   * ```
+   *
    * @param {AirtableOptions} options Airtable client configuration
-   * @returns
+   * @returns {Airtable} current Airtable client
    * @memberof Airtable
    */
-  configure(options: AirtableOptions) {
+  configure(options: AirtableOptions): Airtable {
     this.#options = { ...this.#options, ...options };
     return this;
   }
 
   /**
-   * Set the Airtable client base ID
+   * Returns new Airtable client with defined base ID
+   *
+   * ```ts
+   * const airtable = new Airtable()
+   * const airtableWithNewBaseId = airtable.base("appXXXXXXXXXXXXXX")
+   * ```
    *
    * @param {string} baseId Airtable base
-   * @returns
+   * @returns {Airtable} current Airtable client
    * @memberof Airtable
    */
-  base(baseId: string) {
-    this.#options.baseId = baseId;
-    return this;
+  base(baseId: string): Airtable {
+    return new Airtable({ ...this.#options, baseId });
   }
 
   /**
-   * Set the Airtable table name
+   * Returns new Airtable client with defined table name
+   *
+   * ```ts
+   * const airtable = new Airtable()
+   * const airtableWithNewTableName = airtable.table("Some table name")
+   * ```
    *
    * @param {string} tableName
-   * @returns
+   * @returns {Airtable} current Airtable client
    * @memberof Airtable
    */
-  table(tableName: string) {
-    this.#options.tableName = tableName;
-    return this;
+  table(tableName: string): Airtable {
+    return new Airtable({ ...this.#options, tableName });
   }
 
   /**
    * List records from selected base and table
    *
-   * @template T
-   * @param {SelectOptions} [options={}]
-   * @returns
+   * ```ts
+   * const results = await airtable.select()
+   * ```
+   *
+   * @template T table field types
+   * @param {SelectOptions} [options={}] select query options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<SelectResult<T>>} select query result
    * @memberof Airtable
    */
-  select<T extends FieldSet<string>>(options: SelectOptions<keyof T> = {}) {
+  select<T extends FieldSet<string>>(
+    options: SelectOptions<keyof T> = {}
+  ): Promise<SelectResult<T>> {
     return this.request<SelectResult<T>>({
       url: this.getRequestUrl(options),
     });
@@ -97,12 +130,17 @@ export class Airtable {
   /**
    * Retrieve record from selected base and table
    *
-   * @template T
-   * @param {string} id
-   * @returns
+   * ```ts
+   * const record = await airtable.find("recXXXXXXXXXXXXXX")
+   * const { id, fields, createdTime } = await airtable.find("recXXXXXXXXXXXXXX")
+   * ```
+   *
+   * @template T table field types
+   * @param {string} id table record id
+   * @returns {Promise<TableRecord<T>>} table record result
    * @memberof Airtable
    */
-  find<T extends FieldSet<string>>(id: string) {
+  find<T extends FieldSet<string>>(id: string): Promise<TableRecord<T>> {
     return this.request<TableRecord<T>>({
       url: this.getRequestUrl({}, id),
     });
@@ -111,10 +149,17 @@ export class Airtable {
   /**
    * Create record for selected base and table
    *
-   * @template T
-   * @param {T} data
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecord<T>>}
+   * ```ts
+   *  const createOne = await airtable.create({
+   *    ["Name"]: "Griko Nibras",
+   *    ["Age"]: 25,
+   *  });
+   * ```
+   *
+   * @template T table field types
+   * @param {T} data record values
+   * @param {RecordOptions} [options] record creations options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecord<T>>} created record values
    * @memberof Airtable
    */
   create<T extends FieldSet<string>>(
@@ -125,10 +170,20 @@ export class Airtable {
   /**
    * Create multiple records for selected base and table
    *
-   * @template T
-   * @param {T[]} data
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecords<T>>}
+   * ```ts
+   * const createMultiple = await airtable.create(
+   *   [
+   *     { ["Name"]: "Foo", ["Age"]: 20 },
+   *     { ["Name"]: "Bar", ["Age"]: 15 },
+   *   ],
+   *   { typecast: true }
+   * );
+   * ```
+   *
+   * @template T table field types
+   * @param {T[]} data array of record values
+   * @param {RecordOptions} [options] record creations options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecords<T>>} array of created record values
    * @memberof Airtable
    */
   create<T extends FieldSet<string>>(
@@ -161,10 +216,26 @@ export class Airtable {
   /**
    * Update multiple for selected base and table
    *
-   * @template T
-   * @param {TableRecord<T>[]} records
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecords<T>>}
+   * ```ts
+   * const updateMultiple = await airtable.update(
+   *   [
+   *     {
+   *       id: "recXXXXXXXXXXXXXX",
+   *       fields: { ["Name"]: "Adult boi", ["Age"]: 30 },
+   *     },
+   *     {
+   *       id: "recXXXXXXXXXXXXXX",
+   *       fields: { ["Name"]: "Yung boi", ["Age"]: 15 },
+   *     },
+   *   ],
+   *   { typecast: true }
+   * );
+   * ```
+   *
+   * @template T table field types
+   * @param {TableRecord<T>[]} records array of record values to be updated
+   * @param {RecordOptions} [options] record updating options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecords<T>>} array of updated record values
    * @memberof Airtable
    */
   update<T extends FieldSet<string>>(
@@ -175,16 +246,23 @@ export class Airtable {
   /**
    * Update single records for selected base and table
    *
-   * @template T
-   * @param {string} id
-   * @param {T} [record]
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecord<T>>}
+   * ```ts
+   * const updateOne = await airtable.update("recXXXXXXXXXXXXXX", {
+   *   ["Name"]: "Adult boi",
+   *   ["Age"]: 30,
+   * });
+   * ```
+   *
+   * @template T table field types
+   * @param {string} id record id
+   * @param {T} record record values
+   * @param {RecordOptions} [options] record updating options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecords<T>>} updated record values
    * @memberof Airtable
    */
   update<T extends FieldSet<string>>(
     id: string,
-    record?: T,
+    record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
@@ -215,10 +293,26 @@ export class Airtable {
   /**
    * Replace multiple for selected base and table
    *
-   * @template T
-   * @param {TableRecord<T>[]} records
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecords<T>>}
+   * ```ts
+   * const replaceMultiple = await airtable.replace(
+   *   [
+   *     {
+   *       id: "recXXXXXXXXXXXXXX",
+   *       fields: { ["Name"]: "Adult boi", ["Age"]: 30 },
+   *     },
+   *     {
+   *       id: "recXXXXXXXXXXXXXX",
+   *       fields: { ["Name"]: "Yung boi", ["Age"]: 15 },
+   *     },
+   *   ],
+   *   { typecast: true }
+   * );
+   * ```
+   *
+   * @template T table field types
+   * @param {TableRecord<T>[]} records array of record values to be replaced
+   * @param {RecordOptions} [options] record replacing options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecords<T>>} array of replaced record values
    * @memberof Airtable
    */
   replace<T extends FieldSet<string>>(
@@ -229,16 +323,23 @@ export class Airtable {
   /**
    * Replace single records for selected base and table
    *
-   * @template T
-   * @param {string} id
-   * @param {T} [record]
-   * @param {RecordOptions} [options]
-   * @returns {Promise<TableRecord<T>>}
+   * ```ts
+   * const replaceOne = await airtable.update("recXXXXXXXXXXXXXX", {
+   *   ["Name"]: "Adult boi",
+   *   ["Age"]: 30,
+   * });
+   * ```
+   *
+   * @template T table field types
+   * @param {string} id record id
+   * @param {T} record record values
+   * @param {RecordOptions} [options] record replacing options, read more on the [Airtable API documentation](https://airtable.com/api)
+   * @returns {Promise<TableRecords<T>>} replaced record values
    * @memberof Airtable
    */
   replace<T extends FieldSet<string>>(
     id: string,
-    record?: T,
+    record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
@@ -269,8 +370,12 @@ export class Airtable {
   /**
    * Delete record from selected base and table
    *
-   * @param {string} id
-   * @returns {Promise<DeletedRecord>}
+   * ```ts
+   * const deleteOne = await airtable.delete("recXXXXXXXXXXXXXX");
+   * ```
+   *
+   * @param {string} id record id
+   * @returns {Promise<DeletedRecord>} deleted record result
    * @memberof Airtable
    */
   delete(id: string): Promise<DeletedRecord>;
@@ -278,8 +383,15 @@ export class Airtable {
   /**
    * Delete multiple records from selected base and table
    *
-   * @param {string[]} ids
-   * @returns {Promise<DeletedRecords>}
+   * ```ts
+   * const deleteMultiple = await airtable.delete([
+   *   "recXXXXXXXXXXXXXX",
+   *   "recXXXXXXXXXXXXXX",
+   * ]);
+   * ```
+   *
+   * @param {string[]} ids record ids
+   * @returns {Promise<DeletedRecords>} deleted records result
    * @memberof Airtable
    */
   delete(ids: string[]): Promise<DeletedRecords>;
