@@ -57,27 +57,25 @@ export class Airtable {
   }
 
   /**
-   * Set the Airtable client base ID
+   * Returns new Airtable client with defined base ID
    *
    * @param {string} baseId Airtable base
    * @returns
    * @memberof Airtable
    */
   base(baseId: string): Airtable {
-    this.#options.baseId = baseId;
-    return this;
+    return new Airtable({ ...this.#options, baseId });
   }
 
   /**
-   * Set the Airtable table name
+   * Returns new Airtable client with defined table name
    *
    * @param {string} tableName
    * @returns
    * @memberof Airtable
    */
   table(tableName: string): Airtable {
-    this.#options.tableName = tableName;
-    return this;
+    return new Airtable({ ...this.#options, tableName });
   }
 
   /**
