@@ -29,7 +29,7 @@ export class Airtable {
    * @param {AirtableOptions} options Airtable client configuration
    * @memberof Airtable
    */
-  constructor(options: AirtableOptions) {
+  constructor(options: AirtableOptions = {}) {
     this.#options = {
       ...(options.useEnv
         ? {
