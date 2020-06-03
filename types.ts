@@ -2,15 +2,15 @@ export namespace Field {
   export type SingleLineText = string;
   export type LongText = string;
   export type Checkbox = boolean;
-  export type MultipleSelect<T extends string> = T[];
-  export type SingleSelect<T extends string> = T[];
-  export interface Collaborator {
+  export type MultipleSelect<T extends string = string> = T[];
+  export type SingleSelect<T extends string = string> = T[];
+  export type Collaborator = {
     id: string;
     email: string;
     name: string;
-  }
+  };
   export type Collaborators = Collaborator[];
-  export interface Attachment {
+  export type Attachment = {
     id: string;
     url: string;
     filename: string;
@@ -21,7 +21,7 @@ export namespace Field {
       large: Thumbnail;
       full: Thumbnail;
     };
-  }
+  };
   export type DateType = Date | string;
   export type PhoneNumber = string;
   export type Email = string;
@@ -47,12 +47,12 @@ export interface AirtableOptions {
   useEnv?: boolean;
 }
 
-export type AirtableRequestOptions = RequestInit & {
+export interface AirtableRequestOptions extends RequestInit {
   url: string;
   jsonBody?: any;
-};
+}
 
-export interface FieldSet<T extends string> {
+export interface FieldSet<T extends string = string> {
   [key: string]:
     | undefined
     | string
@@ -92,19 +92,19 @@ export interface SelectOptions<T extends string | number | symbol> {
   userLocale?: string;
 }
 
-export type SelectResult<T extends FieldSet<string>> = TableRecords<T> & {
+export interface SelectResult<T extends FieldSet> extends TableRecords<T> {
   offset: string;
-};
+}
 
-export interface TableRecord<T extends FieldSet<string>> {
+export interface TableRecord<T extends FieldSet> {
   id: string;
   fields: T;
   createdTime?: string;
 }
 
-export type TableRecords<T extends FieldSet<string>> = {
+export interface TableRecords<T extends FieldSet> {
   records: TableRecord<T>[];
-};
+}
 
 export interface DeletedRecord {
   id: string;

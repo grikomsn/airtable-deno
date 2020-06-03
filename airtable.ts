@@ -119,7 +119,7 @@ export class Airtable {
    * @returns {Promise<SelectResult<T>>} select query result
    * @memberof Airtable
    */
-  select<T extends FieldSet<string>>(
+  select<T extends FieldSet>(
     options: SelectOptions<keyof T> = {}
   ): Promise<SelectResult<T>> {
     return this.request<SelectResult<T>>({
@@ -140,7 +140,7 @@ export class Airtable {
    * @returns {Promise<TableRecord<T>>} table record result
    * @memberof Airtable
    */
-  find<T extends FieldSet<string>>(id: string): Promise<TableRecord<T>> {
+  find<T extends FieldSet>(id: string): Promise<TableRecord<T>> {
     return this.request<TableRecord<T>>({
       url: this.getRequestUrl({}, id),
     });
@@ -162,7 +162,7 @@ export class Airtable {
    * @returns {Promise<TableRecord<T>>} created record values
    * @memberof Airtable
    */
-  create<T extends FieldSet<string>>(
+  create<T extends FieldSet>(
     data: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
@@ -186,15 +186,12 @@ export class Airtable {
    * @returns {Promise<TableRecords<T>>} array of created record values
    * @memberof Airtable
    */
-  create<T extends FieldSet<string>>(
+  create<T extends FieldSet>(
     data: T[],
     options?: RecordOptions
   ): Promise<TableRecords<T>>;
 
-  create<T extends FieldSet<string>>(
-    data: T | T[],
-    options: RecordOptions = {}
-  ) {
+  create<T extends FieldSet>(data: T | T[], options: RecordOptions = {}) {
     if (data instanceof Array) {
       return this.jsonRequest<TableRecords<T>>({
         url: this.getRequestUrl(),
@@ -238,7 +235,7 @@ export class Airtable {
    * @returns {Promise<TableRecords<T>>} array of updated record values
    * @memberof Airtable
    */
-  update<T extends FieldSet<string>>(
+  update<T extends FieldSet>(
     records: TableRecord<T>[],
     options?: RecordOptions
   ): Promise<TableRecords<T>>;
@@ -260,13 +257,13 @@ export class Airtable {
    * @returns {Promise<TableRecords<T>>} updated record values
    * @memberof Airtable
    */
-  update<T extends FieldSet<string>>(
+  update<T extends FieldSet>(
     id: string,
     record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
-  update<T extends FieldSet<string>>(
+  update<T extends FieldSet>(
     idOrRecords: string | TableRecord<T>[],
     record?: T | RecordOptions,
     options?: RecordOptions
@@ -315,7 +312,7 @@ export class Airtable {
    * @returns {Promise<TableRecords<T>>} array of replaced record values
    * @memberof Airtable
    */
-  replace<T extends FieldSet<string>>(
+  replace<T extends FieldSet>(
     records: TableRecord<T>[],
     options?: RecordOptions
   ): Promise<TableRecords<T>>;
@@ -337,13 +334,13 @@ export class Airtable {
    * @returns {Promise<TableRecords<T>>} replaced record values
    * @memberof Airtable
    */
-  replace<T extends FieldSet<string>>(
+  replace<T extends FieldSet>(
     id: string,
     record: T,
     options?: RecordOptions
   ): Promise<TableRecord<T>>;
 
-  replace<T extends FieldSet<string>>(
+  replace<T extends FieldSet>(
     idOrRecords: string | TableRecord<T>[],
     record?: T | RecordOptions,
     options?: RecordOptions
@@ -489,7 +486,7 @@ export class Airtable {
     });
   }
 
-  private updateOrReplace<T extends FieldSet<string>>({
+  private updateOrReplace<T extends FieldSet>({
     id,
     data,
     replace,
@@ -517,7 +514,7 @@ export class Airtable {
   };
 }
 
-interface UpdateOrReplaceOptions<T extends FieldSet<string>> {
+interface UpdateOrReplaceOptions<T extends FieldSet> {
   id?: string;
   data?: TableRecord<T> | TableRecords<T>;
   replace?: boolean;
