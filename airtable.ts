@@ -397,21 +397,15 @@ export class Airtable {
     return this.request<DeletedRecord | DeletedRecords>({
       url: this.getRequestUrl({}, Array.isArray(ids) ? "" : ids),
       method: "DELETE",
-      headers: {
-        ["Content-Type"]: "application/x-www-form-urlencoded",
-      },
+      headers: { ["Content-Type"]: "application/x-www-form-urlencoded" },
       ...(Array.isArray(ids)
-        ? {
-            body: ids.map((id) => `records[]=${id}`).join("&"),
-          }
+        ? { body: ids.map((id) => `records[]=${id}`).join("&") }
         : {}),
     });
   }
 
   private getAuthHeader(): HeadersInit {
-    return {
-      ["Authorization"]: `Bearer ${this.#options.apiKey}`,
-    };
+    return { ["Authorization"]: `Bearer ${this.#options.apiKey}` };
   }
 
   private getRequestUrl(
@@ -433,11 +427,15 @@ export class Airtable {
     }
 
     if (!baseId) {
-      throw new AirtableError({ message: "Base ID is not defined" });
+      throw new AirtableError({
+        message: "Base ID is not defined",
+      });
     }
 
     if (!tableName) {
-      throw new AirtableError({ message: "Table Name is not defined" });
+      throw new AirtableError({
+        message: "Table Name is not defined",
+      });
     }
 
     const urlSegments = [
