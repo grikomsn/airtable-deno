@@ -65,7 +65,7 @@ export interface FieldSet<T extends string = string> {
     | Field.SingleSelect<T>
     | Field.Collaborator
     | Field.Collaborators
-    | Field.Attachment
+    | Field.Attachment[]
     | Field.DateType
     | Field.PhoneNumber
     | Field.Email
