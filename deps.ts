@@ -1,1 +1,1 @@
-export { stringify } from "https://deno.land/std@0.61.0/node/querystring.ts";
+export { stringify } from "https://deno.land/std@0.63.0/node/querystring.ts";
