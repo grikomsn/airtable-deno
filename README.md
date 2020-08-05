@@ -24,17 +24,9 @@
 
 ## Imports
 
-**Latest version (v0.2.2)**
-
-- <https://deno.land/x/airtable@v0.2.2/mod.ts>
-- <https://denoland.id/x/airtable@v0.2.1/mod.ts>
-- <https://denopkg.com/grikomsn/airtable-deno@v0.2.2/mod.ts>
-
-**Bleeding edge (master branch)**
-
-- <https://deno.land/x/airtable/mod.ts>
-- <https://denoland.id/x/airtable/mod.ts>
-- <https://denopkg.com/grikomsn/airtable-deno/mod.ts>
+- <https://deno.land/x/airtable@v1.0.0/mod.ts>
+- <https://denoland.id/x/airtable@v1.0.0/mod.ts>
+- <https://denopkg.com/grikomsn/airtable-deno@v1.0.0/mod.ts>
 
 ## Comparison with [Node.js version](https://github.com/Airtable/airtable.js)
 
@@ -145,7 +137,7 @@ All options, parameters, errors, and responses are the same as on the [Airtable 
 
 ## Dependencies
 
-- `querystring`: <https://deno.land/std@0.61.0/node/querystring.ts>
+- `querystring`: <https://deno.land/std/node/querystring.ts>
 
 ## License
 
