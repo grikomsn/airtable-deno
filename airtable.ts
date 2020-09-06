@@ -1,8 +1,9 @@
-import { stringify } from "./deps.ts";
 import {
   AirtableError,
   AirtableOptions,
   AirtableRequestOptions,
+  DeletedRecord,
+  DeletedRecords,
   FieldSet,
   RecordOptions,
   SelectOptions,
@@ -10,8 +11,9 @@ import {
   TableRecord,
   TableRecords,
 } from "./mod.ts";
-import { DeletedRecord, DeletedRecords } from "./types.ts";
+
 import { hasAnyKey } from "./utils.ts";
+import { stringify } from "./deps.ts";
 
 /**
  * Unofficial Airtable API client for Deno
