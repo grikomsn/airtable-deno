@@ -73,7 +73,10 @@ export class Airtable {
    * @memberof Airtable
    */
   configure(options: AirtableOptions): Airtable {
-    this.#options = { ...this.#options, ...options };
+    this.#options = {
+      ...this.#options,
+      ...options,
+    };
     return this;
   }
 
@@ -90,7 +93,10 @@ export class Airtable {
    * @memberof Airtable
    */
   base(baseId: string): Airtable {
-    return new Airtable({ ...this.#options, baseId });
+    return new Airtable({
+      ...this.#options,
+      baseId,
+    });
   }
 
   /**
@@ -106,7 +112,10 @@ export class Airtable {
    * @memberof Airtable
    */
   table(tableName: string): Airtable {
-    return new Airtable({ ...this.#options, tableName });
+    return new Airtable({
+      ...this.#options,
+      tableName,
+    });
   }
 
   /**
@@ -208,7 +217,10 @@ export class Airtable {
     return this.jsonRequest<TableRecord<T>>({
       url: this.getRequestUrl(),
       method: "POST",
-      jsonBody: { fields: data, ...options },
+      jsonBody: {
+        fields: data,
+        ...options,
+      },
     });
   }
 
@@ -399,7 +411,9 @@ export class Airtable {
     return this.request<DeletedRecord | DeletedRecords>({
       url: this.getRequestUrl({}, Array.isArray(ids) ? "" : ids),
       method: "DELETE",
-      headers: { ["Content-Type"]: "application/x-www-form-urlencoded" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
       ...(Array.isArray(ids)
         ? { body: ids.map((id) => `records[]=${id}`).join("&") }
         : {}),
@@ -407,7 +421,9 @@ export class Airtable {
   }
 
   private getAuthHeader(): HeadersInit {
-    return { ["Authorization"]: `Bearer ${this.#options.apiKey}` };
+    return {
+      Authorization: `Bearer ${this.#options.apiKey}`,
+    };
   }
 
   private getRequestUrl(
@@ -459,7 +475,10 @@ export class Airtable {
     console.log(url);
 
     const response = await fetch(url, {
-      headers: { ...this.getAuthHeader(), ...headers },
+      headers: {
+        ...this.getAuthHeader(),
+        ...headers,
+      },
       ...options,
     });
 
@@ -480,7 +499,10 @@ export class Airtable {
     ...options
   }: AirtableRequestOptions) {
     return this.request<T>({
-      headers: { ...headers, ["Content-Type"]: "application/json" },
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(jsonBody),
       ...options,
     });
@@ -498,14 +520,20 @@ export class Airtable {
       return this.jsonRequest<TableRecord<T>>({
         url: this.getRequestUrl({}, id),
         method,
-        jsonBody: { ...data, ...options },
+        jsonBody: {
+          ...data,
+          ...options,
+        },
       });
     }
 
     return this.jsonRequest<TableRecords<T>>({
       url: this.getRequestUrl(),
       method,
-      jsonBody: { ...data, ...options },
+      jsonBody: {
+        ...data,
+        ...options,
+      },
     });
   }
 
