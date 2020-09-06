@@ -162,8 +162,8 @@ export class Airtable {
    *
    * ```ts
    *  const createOne = await airtable.create({
-   *    ["Name"]: "Griko Nibras",
-   *    ["Age"]: 25,
+   *    Name: "Griko Nibras",
+   *    Age: 25,
    *  });
    * ```
    *
@@ -184,8 +184,8 @@ export class Airtable {
    * ```ts
    * const createMultiple = await airtable.create(
    *   [
-   *     { ["Name"]: "Foo", ["Age"]: 20 },
-   *     { ["Name"]: "Bar", ["Age"]: 15 },
+   *     { Name: "Foo", Age: 20 },
+   *     { Name: "Bar", Age: 15 },
    *   ],
    *   { typecast: true }
    * );
@@ -232,11 +232,11 @@ export class Airtable {
    *   [
    *     {
    *       id: "recXXXXXXXXXXXXXX",
-   *       fields: { ["Name"]: "Adult boi", ["Age"]: 30 },
+   *       fields: { Name: "Adult boi", Age: 30 },
    *     },
    *     {
    *       id: "recXXXXXXXXXXXXXX",
-   *       fields: { ["Name"]: "Yung boi", ["Age"]: 15 },
+   *       fields: { Name: "Yung boi", Age: 15 },
    *     },
    *   ],
    *   { typecast: true }
@@ -259,8 +259,8 @@ export class Airtable {
    *
    * ```ts
    * const updateOne = await airtable.update("recXXXXXXXXXXXXXX", {
-   *   ["Name"]: "Adult boi",
-   *   ["Age"]: 30,
+   *   Name: "Adult boi",
+   *   Age: 30,
    * });
    * ```
    *
@@ -309,11 +309,11 @@ export class Airtable {
    *   [
    *     {
    *       id: "recXXXXXXXXXXXXXX",
-   *       fields: { ["Name"]: "Adult boi", ["Age"]: 30 },
+   *       fields: { Name: "Adult boi", Age: 30 },
    *     },
    *     {
    *       id: "recXXXXXXXXXXXXXX",
-   *       fields: { ["Name"]: "Yung boi", ["Age"]: 15 },
+   *       fields: { Name: "Yung boi", Age: 15 },
    *     },
    *   ],
    *   { typecast: true }
@@ -336,8 +336,8 @@ export class Airtable {
    *
    * ```ts
    * const replaceOne = await airtable.update("recXXXXXXXXXXXXXX", {
-   *   ["Name"]: "Adult boi",
-   *   ["Age"]: 30,
+   *   Name: "Adult boi",
+   *   Age: 30,
    * });
    * ```
    *
