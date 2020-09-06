@@ -44,6 +44,7 @@ export class Airtable {
    */
   constructor(options: AirtableOptions = {}) {
     this.#options = {
+      ...Airtable.defaultOptions,
       ...(options.useEnv
         ? {
             apiKey: Deno.env.get("AIRTABLE_API_KEY"),
@@ -52,7 +53,6 @@ export class Airtable {
             tableName: Deno.env.get("AIRTABLE_TABLE_NAME"),
           }
         : {}),
-      ...Airtable.defaultOptions,
       ...options,
     };
   }
