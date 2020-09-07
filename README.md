@@ -24,9 +24,9 @@
 
 ## Imports
 
-- <https://deno.land/x/airtable@v1.0.2/mod.ts>
-- <https://denoland.id/x/airtable@v1.0.2/mod.ts>
-- <https://denopkg.com/grikomsn/airtable-deno@v1.0.2/mod.ts>
+- <https://deno.land/x/airtable@v1.1.1/mod.ts>
+- <https://denoland.id/x/airtable@v1.1.1/mod.ts>
+- <https://denopkg.com/grikomsn/airtable-deno@v1.1.1/mod.ts>
 
 ## Comparison with [Node.js version](https://github.com/Airtable/airtable.js)
 
