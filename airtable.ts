@@ -465,10 +465,9 @@ export class Airtable {
       baseId,
       encodeURIComponent(tableName),
       ...segments,
-      ...(hasAnyKey(query) ? ["?", stringify(query)] : []),
     ];
-
-    return urlSegments.join("/");
+    const queryString = hasAnyKey(query) ? "?" + stringify(query) : "";
+    return urlSegments.join("/").concat(queryString);
   }
 
   private async request<T>({
