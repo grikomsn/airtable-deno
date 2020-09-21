@@ -430,7 +430,7 @@ export class Airtable {
     };
   }
 
-  private getRequestUrl(
+  getRequestUrl(
     query: Record<string, any> = {},
     ...segments: string[]
   ): string {
