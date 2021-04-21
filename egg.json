@@ -1,0 +1,10 @@
+{
+    "name": "airtable",
+    "description": "Unofficial Airtable client for Deno 🦕",
+    "homepage": "https://github.com/grikomsn/airtable-deno",
+    "files": [
+    "./**/*.ts",
+    "README.md"
+    ],
+    "entry": "./mod.ts"
+}
