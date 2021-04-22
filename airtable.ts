@@ -7,6 +7,7 @@ import {
   RecordOptions,
   SelectOptions,
   SelectResult,
+  SortSelectOption,
   TableRecord,
   TableRecords,
 } from "./types.ts";
@@ -466,8 +467,35 @@ export class Airtable {
       encodeURIComponent(tableName),
       ...segments,
     ];
-    const queryString = hasAnyKey(query) ? "?" + stringify(query) : "";
-    return urlSegments.join("/").concat(queryString);
+
+    const url = urlSegments.join('/');
+
+    const { sort, ...rest } = query;
+    const sortObjects: SortSelectOption[] = sort;
+
+    let sortQueryString = '';
+    let restQueryString = '';
+
+    if (sortObjects?.length) {
+      sortQueryString = sortObjects
+        .map(
+          ({ field, direction }, index) =>
+            `sort[${index}][field]=${field}&sort[${index}][direction]=${direction}`
+        )
+        .join('&');
+    }
+
+    if (hasAnyKey(rest)) {
+      restQueryString = stringify(rest);
+    }
+
+    if (sortQueryString === '' && restQueryString !== '') return url + '?' + restQueryString;
+
+    if (sortQueryString !== '' && restQueryString === '') return url + '?' + sortQueryString;
+
+    if (sortQueryString !== '' && restQueryString !== '') return url + '?' + sortQueryString + '&' + restQueryString;
+
+    return url;
   }
 
   private async request<T>({
