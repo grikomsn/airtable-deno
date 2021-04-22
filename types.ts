@@ -46,15 +46,17 @@ export type FieldSetValue<T extends string = string> =
   | Field.Duration
   | Field.Rating;
 
+export interface SortSelectOption {
+  field: string;
+  direction?: "asc" | "desc";
+}
+
 export interface SelectOptions<T extends FieldSet> {
   fields?: (keyof T)[];
   filterByFormula?: string;
   maxRecords?: number;
   pageSize?: number;
-  sort?: {
-    field: string;
-    direction?: "asc" | "desc";
-  }[];
+  sort?: SortSelectOption[];
   view?: string;
   cellFormat?: "json" | "string";
   timeZone?: Timezone;
