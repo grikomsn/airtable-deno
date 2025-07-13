@@ -59,6 +59,7 @@ export interface SelectOptions<T extends FieldSet> {
   cellFormat?: "json" | "string";
   timeZone?: Timezone;
   userLocale?: UserLocale;
+  offset?: string;
 }
 
 export interface SelectResult<T extends FieldSet> extends TableRecords<T> {
